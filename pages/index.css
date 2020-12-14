@@ -4,10 +4,12 @@
 @import url('../blocks/page/page.css');
 /*section: header*/
 @import url('../blocks/header/header.css');
-@import url('../blocks/lead/content.css');
+@import url('../blocks/header/__logo/header__logo.css');
+
+@import url('../blocks/content/content.css');
 /*section: profile*/
-@import url('../blocks/lead/profile.css');
+@import url('../blocks/profile/profile.css');
 /*section: elements*/
-@import url('../blocks/intro/elements.css');
+@import url('../blocks/elements/elements.css');
 /*section: footer*/
 @import url('../blocks/footer/footer.css');
