@@ -1,0 +1,7 @@
+.profile__name-block {
+  width: 100%;
+  /* max-width: 336px; */
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}

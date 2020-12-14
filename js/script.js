@@ -1,5 +1,5 @@
 let likes = document.querySelectorAll('.element__caption-like');
-for(let i = 0; i < likes.length; i++) {
+for (let i = 0; i < likes.length; i++) {
   likes[i].addEventListener('mouseover', function(){
     if (!likes[i].classList.contains('element__caption-like_active')) {
       likes[i].classList.add('element__caption-like_hover');
@@ -18,4 +18,41 @@ for(let i = 0; i < likes.length; i++) {
       likes[i].classList.remove('element__caption-like_hover') :
       likes[i].classList.add('element__caption-like_hover');
   })
+}
+
+let popup = document.querySelector('.popup'); 
+let popupInputName = popup.querySelector('.popup__input-name');
+let popupInputProfession = popup.querySelector('.popup__input-profession');
+let profileName = document.querySelector('.profile__name');
+let profileProfession = document.querySelector('.profile__profession');
+popupInputName.value = profileName.textContent;
+popupInputProfession.value = profileProfession.textContent;
+
+let profileEditBtn = document.querySelector('.profile__edit-button');
+profileEditBtn.addEventListener('click', openPopup);
+
+let popupCloseBtn = popup.querySelector('.popup__close-button');
+popupCloseBtn.addEventListener('click', closePopup);
+
+function openPopup(){
+  popup.classList.add('popup_opened');
+}
+
+function closePopup(){
+  popup.classList.remove('popup_opened');
+}
+
+let popupSaveBtn = popup.querySelector('.popup__save-button');
+popupSaveBtn.addEventListener('click', submitPopup);
+
+function submitPopup(evt){
+  evt.preventDefault();
+  let popupInputName = popup.querySelector('.popup__input-name');
+  let popupInputProfession = popup.querySelector('.popup__input-profession');
+  let profileName = document.querySelector('.profile__name');
+  let profileProfession = document.querySelector('.profile__profession');
+  profileName.textContent = popupInputName.value;
+  profileProfession.textContent = popupInputProfession.value;
+
+  closePopup();
 }
