@@ -1,0 +1,13 @@
+@import url('../vendor/normalize.css');
+@import url('../vendor/fonts.css');
+@import url('../blocks/root/root.css');
+@import url('../blocks/page/page.css');
+/*section: header*/
+@import url('../blocks/header/header.css');
+@import url('../blocks/lead/content.css');
+/*section: profile*/
+@import url('../blocks/lead/profile.css');
+/*section: elements*/
+@import url('../blocks/intro/elements.css');
+/*section: footer*/
+@import url('../blocks/footer/footer.css');
