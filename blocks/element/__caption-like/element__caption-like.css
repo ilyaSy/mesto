@@ -1,0 +1,14 @@
+.element__caption-like {
+  margin: 25px 15px 31px 8px;
+  padding: 0;
+  width: 20.76px;
+  background-image: url('./images/heart_disabled.svg');
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-size: 0;
+}
+
+.element__caption-like:hover {
+  cursor: pointer;
+}

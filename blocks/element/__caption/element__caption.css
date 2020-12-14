@@ -1,0 +1,12 @@
+.element__caption {
+  width: 100%;
+  min-height: 79px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  color: #000;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 29px;
+  border-radius: 0 0 10px 10px;
+}
