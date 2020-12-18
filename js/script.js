@@ -42,6 +42,10 @@ popupCloseBtn.addEventListener('click', closePopup);
 let popupSaveBtn = popup.querySelector('.popup__save-button');
 popupSaveBtn.addEventListener('click', submitPopup);
 
+// event: press enter
+popupInputs[0].addEventListener('keypress', (evt) => { if (evt.key === 'Enter') submitPopup(evt)});
+popupInputs[1].addEventListener('keypress', (evt) => { if (evt.key === 'Enter') submitPopup(evt)});
+
 //open popup function 
 function openPopup(){
   popup.classList.add('popup_opened');

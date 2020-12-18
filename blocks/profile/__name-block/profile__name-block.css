@@ -1,7 +1,11 @@
 .profile__name-block {
-  width: 100%;
-  /* max-width: 336px; */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
+  width: min-content;
+  max-width: 100%;
+}
+
+@media screen and (max-width:580px) {
+  .profile__name-block {
+    max-width: calc(100% - 2*(18px + 10px));
+  }
 }
