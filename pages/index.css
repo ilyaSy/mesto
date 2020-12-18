@@ -28,7 +28,6 @@
 @import url('../blocks/element/__caption-like/_hover/element__caption-like_hover.css');
 /*section: footer*/
 @import url('../blocks/footer/footer.css');
-@import url('../blocks/footer/__header/footer__header.css');
 /*popup*/
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/_opened/popup_opened.css');

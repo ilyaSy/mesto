@@ -1,6 +1,10 @@
 .footer {
   margin: 0;
   padding: 66px 0 60px 0;
+  color: #545454;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: normal;
 }
 
 @media screen and (max-width: 899px) {
