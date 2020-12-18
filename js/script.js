@@ -26,10 +26,6 @@ let popupInputs = popup.querySelectorAll('.popup__input');
 let profileName = profile.querySelector('.profile__name');
 let profileProfession = profile.querySelector('.profile__profession');
 
-// initialize fields in popup
-popupInputs[0].value = profileName.textContent;
-popupInputs[1].value = profileProfession.textContent;
-
 // event: open popup
 let profileEditBtn = profile.querySelector('.profile__edit-button');
 profileEditBtn.addEventListener('click', openPopup);
@@ -42,13 +38,17 @@ popupCloseBtn.addEventListener('click', closePopup);
 let popupSaveBtn = popup.querySelector('.popup__save-button');
 popupSaveBtn.addEventListener('click', submitPopup);
 
-// event: press enter
+// event: press enter = submit
 popupInputs[0].addEventListener('keypress', (evt) => { if (evt.key === 'Enter') submitPopup(evt)});
 popupInputs[1].addEventListener('keypress', (evt) => { if (evt.key === 'Enter') submitPopup(evt)});
 
 //open popup function 
 function openPopup(){
   popup.classList.add('popup_opened');
+
+  // initialize fields in popup
+  popupInputs[0].value = profileName.textContent;
+  popupInputs[1].value = profileProfession.textContent;
 }
 
 //close popup function 
