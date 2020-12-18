@@ -3,7 +3,7 @@
   padding: 0;
   max-width: calc(100% - 150px - 120px - 30px - 60px);
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   flex-direction: column;
 }
 
