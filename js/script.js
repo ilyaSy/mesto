@@ -22,38 +22,42 @@ for (let i = 0; i < likes.length; i++) {
 
 let popup = document.querySelector('.popup');
 let profile = document.querySelector('.profile');
-let popupInputName = popup.querySelector('.popup__input-name');
-let popupInputProfession = popup.querySelector('.popup__input-profession');
+let popupInputs = popup.querySelectorAll('.popup__input');
 let profileName = profile.querySelector('.profile__name');
 let profileProfession = profile.querySelector('.profile__profession');
-popupInputName.value = profileName.textContent;
-popupInputProfession.value = profileProfession.textContent;
 
+// initialize fields in popup
+popupInputs[0].value = profileName.textContent;
+popupInputs[1].value = profileProfession.textContent;
+
+// event: open popup
 let profileEditBtn = profile.querySelector('.profile__edit-button');
 profileEditBtn.addEventListener('click', openPopup);
 
+// event: close popup
 let popupCloseBtn = popup.querySelector('.popup__close-button');
 popupCloseBtn.addEventListener('click', closePopup);
 
+// event: click save
 let popupSaveBtn = popup.querySelector('.popup__save-button');
 popupSaveBtn.addEventListener('click', submitPopup);
 
+//open popup function 
 function openPopup(){
   popup.classList.add('popup_opened');
 }
 
+//close popup function 
 function closePopup(evt){
   evt.preventDefault();
   popup.classList.remove('popup_opened');
 }
+
+//save popup function 
 function submitPopup(evt){
   evt.preventDefault();
-  let popupInputName = popup.querySelector('.popup__input-name');
-  let popupInputProfession = popup.querySelector('.popup__input-profession');
-  let profileName = profile.querySelector('.profile__name');
-  let profileProfession = profile.querySelector('.profile__profession');
-  profileName.textContent = popupInputName.value;
-  profileProfession.textContent = popupInputProfession.value;
+  profileName.textContent = popupInputs[0].value;
+  profileProfession.textContent = popupInputs[1].value;
 
   popup.classList.remove('popup_opened');
 }
