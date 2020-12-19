@@ -13,4 +13,9 @@
 
 .element__caption-like:hover {
   cursor: pointer;
+  background-image: url('./images/heart_hover.svg');
+}
+
+.element__caption-like:active {
+  background-image: url('./images/heart_active.svg');
 }
