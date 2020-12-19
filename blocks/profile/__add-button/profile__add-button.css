@@ -3,7 +3,9 @@
   height: 50px;
   background-image: url('./images/plus.svg');
   background-size: 22px 22px;
-  border: 2px solid #fff;
+  border: 2px solid #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 2px;
 }
 
 @media screen and (max-width: 380px) {
