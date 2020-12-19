@@ -4,12 +4,12 @@
   max-width: 100%;
   display:flex;
   justify-content: center;
-  align-items: baseline;
+  align-items: top;
 }
 
 @media screen and (max-width:580px) {
   .profile__name-block {
     max-width: calc(100% - (18px + 10px));
-    right:calc(-23px/2);
+    right:calc(-28px/2);
   }
 }
