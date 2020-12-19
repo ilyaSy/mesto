@@ -1,18 +1,5 @@
 .header {
-  position: relative;
-  display: flex;
-  min-height: 119px;
   margin: 0;
-  padding: 0;
-}
-
-.header::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
-  width: 100%;
-  height: 100%;
-  opacity: .7;
-  border-bottom: 1px solid #545454;
+  padding: 45px 0 41px 0;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
 }
