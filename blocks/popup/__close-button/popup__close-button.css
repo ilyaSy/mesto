@@ -7,7 +7,6 @@
   height: 40px;
   transform: rotate(45deg);
   background-image: url('./images/plus.svg');
-  /* background-image: url('./images/сlose.svg'); */
   background-position: center;
   background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0);
@@ -15,7 +14,7 @@
 }
   
 .popup__close-button:hover {
-  opacity: .8;
+  opacity: .6;
 }
 
 @media screen and (max-width: 680px) {
