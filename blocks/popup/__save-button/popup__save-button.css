@@ -7,6 +7,11 @@
   font-size: 18px;
   line-height: 22px;
   border-radius: 2px;
+  background-color: #000;
+}
+
+.popup__save-button:hover {
+  opacity: .8;
 }
 
 @media screen and (max-width: 680px) {

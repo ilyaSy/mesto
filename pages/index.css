@@ -24,8 +24,6 @@
 @import url('../blocks/element/__caption/element__caption.css');
 @import url('../blocks/element/__caption-text/element__caption-text.css');
 @import url('../blocks/element/__caption-like/element__caption-like.css');
-@import url('../blocks/element/__caption-like/_active/element__caption-like_active.css');
-@import url('../blocks/element/__caption-like/_hover/element__caption-like_hover.css');
 /*section: footer*/
 @import url('../blocks/footer/footer.css');
 /*popup*/
