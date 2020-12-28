@@ -11,11 +11,11 @@
   font-size: 0;
 }
 
-.element__caption-like:hover {
+.element__caption-like:not(.element__caption-like_active):hover {
   cursor: pointer;
   background-image: url('../../../images/heart_hover.svg');
 }
 
-.element__caption-like:active {
+/* .element__caption-like:active {
   background-image: url('../../../images/heart_active.svg');
-}
+} */

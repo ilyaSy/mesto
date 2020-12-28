@@ -47,6 +47,14 @@ const initializeCards = cards => {
       element.querySelector('.element__picture').src = card.link;
       element.querySelector('.element__picture').alt = `Фото: ${card.name}`;
       element.querySelector('.element__caption-text').textContent = card.name;
+
+      element.querySelector('.element__caption-like').addEventListener('click', (event) => {
+        event.target.classList.toggle('element__caption-like_active');
+        // event.target.classList.contains('element__caption-like_hover') ?
+        //   event.target.classList.remove('element__caption-like_hover') :
+        //   event.target.classList.add('element__caption-like_hover');
+      });
+      
       elements.prepend(element);
     });
   }
