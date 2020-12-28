@@ -27,6 +27,7 @@ const initialCards = [
 
 let popupEdit = document.querySelector('.popup_edit');
 let popupAdd = document.querySelector('.popup_add');
+let popupShow = document.querySelector('.popup_show');
 let popupEditForm = popupEdit.querySelector('.popup__container');
 let popupAddForm = popupAdd.querySelector('.popup__container');
 let popupInputName = popupEdit.querySelector('.popup__input_value_name');
@@ -35,6 +36,7 @@ let popupInputText = popupAdd.querySelector('.popup__input_value_text');
 let popupInputSrc = popupAdd.querySelector('.popup__input_value_src');
 let popupEditCloseBtn = popupEdit.querySelector('.popup__close-button');
 let popupAddCloseBtn = popupAdd.querySelector('.popup__close-button');
+let popupShowCloseBtn = popupShow.querySelector('.popup__close-button');
 
 let profile = document.querySelector('.profile');
 let profileName = profile.querySelector('.profile__name');
@@ -57,6 +59,8 @@ const createElement = card => {
   element.querySelector('.element__delete-button').addEventListener('click', (event) => {
     event.target.closest('.element').remove();
   });
+
+  element.querySelector('.element__picture').addEventListener('click', (event) => {openPopup(popupShow, event)});
   
   return element;
 }
@@ -74,7 +78,7 @@ const initializeCards = cards => {
 }
 
 //open popup function 
-const openPopup = popup => {
+const openPopup = (popup, event) => {  
   popup.classList.add('popup_opened');
 
   if (popup.classList.contains('popup_edit')) {
@@ -86,6 +90,14 @@ const openPopup = popup => {
     // initialize fields in popup add card
     popupInputSrc.value = '';
     popupInputText.value = '';
+  }
+  else if (popup.classList.contains('popup_show')) {
+    const picture = event.target;
+    const element = picture.closest('.element');
+    const caption = element.querySelector('.element__caption-text');
+    popup.querySelector('.popup-show__picture').src = picture.src;
+    popup.querySelector('.popup-show__picture').alt = picture.alt;
+    popup.querySelector('.popup-show__caption').textContent = caption.textContent;
   }
 }
 
@@ -123,5 +135,6 @@ profileEditBtn.addEventListener('click', () => {openPopup(popupEdit)});
 profileAddBtn.addEventListener('click', () => {openPopup(popupAdd)});
 popupEditCloseBtn.addEventListener('click', () => {closePopup(popupEdit)});
 popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
+popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopup);
 popupAddForm.addEventListener('submit', submitPopup);
