@@ -51,6 +51,10 @@ const initializeCards = cards => {
       element.querySelector('.element__caption-like').addEventListener('click', (event) => {
         event.target.classList.toggle('element__caption-like_active');
       });
+
+      element.querySelector('.element__delete-button').addEventListener('click', (event) => {
+        event.target.closest('.element').remove();
+      });
       
       elements.prepend(element);
     });
