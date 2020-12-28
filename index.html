@@ -29,62 +29,31 @@
       </section>
 
       <section class="elements" aria-label="elements">
-        <!-- <figure class="element">
-          <img src="./images/karachaevsk.jpg" alt="Фото: Карачаевск, развалины храма" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Карачаевск</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-        <figure class="element">
-          <img src="./images/dombai.jpg" alt="Фото: горы, Домбай" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Домбай</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-        <figure class="element">
-          <img src="./images/elbrus.jpg" alt="Фото: Эльбрус, вид издалека" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Гора Эльбрус</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-        <figure class="element">
-          <img src="./images/karachaevsk.jpg" alt="Фото: Карачаево-Черкессия, развалины храма" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Карачаево-Черкессия</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-        <figure class="element">
-          <img src="./images/dombai.jpg" alt="Фото: горы, Домбай" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Домбай</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-        <figure class="element">
-          <img src="./images/elbrus.jpg" alt="Фото: Эльбрус, вид издалека" class="element__picture">
-          <figcaption class="element__caption">
-            <h2 class="element__caption-text">Гора Эльбрус</h2>
-            <button type="button" class="element__caption-like"></button>
-          </figcaption>
-        </figure>
-      </section> -->
     </main>
 
     <footer class="footer">
       &copy; 2020 Mesto Russia
     </footer>
 
-    <div class="popup">
-      <form action="/" name="popup" class="popup__container">
+    <div class="popup popup_edit">
+      <form action="/" name="popupEdit" class="popup__container">
         <button type="button" class="popup__close-button"></button>
         <fieldset class="popup__fieldset">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input type="text" name="userName" class="popup__input popup__input_value_name">
           <input type="text" name="userJob" class="popup__input popup__input_value_job">
+          <button type="submit" class="popup__save-button">Сохранить</button>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="popup popup_add">
+      <form action="/" name="popupAdd" class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <fieldset class="popup__fieldset">
+          <h2 class="popup__title">Новое место</h2>          
+          <input type="text" name="elementText" class="popup__input popup__input_value_text">
+          <input type="text" name="elementSrc" class="popup__input popup__input_value_src">
           <button type="submit" class="popup__save-button">Сохранить</button>
         </fieldset>
       </form>
