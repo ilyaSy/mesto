@@ -40,8 +40,8 @@
         <button type="button" class="popup__close-button"></button>
         <fieldset class="popup__fieldset">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" name="userName" class="popup__input popup__input_value_name">
-          <input type="text" name="userJob" class="popup__input popup__input_value_job">
+          <input type="text" name="userName" placeholder="Имя" class="popup__input popup__input_value_name">
+          <input type="text" name="userJob" placeholder="Профессия" class="popup__input popup__input_value_job">
           <button type="submit" class="popup__save-button">Сохранить</button>
         </fieldset>
       </form>
@@ -52,8 +52,8 @@
         <button type="button" class="popup__close-button"></button>
         <fieldset class="popup__fieldset">
           <h2 class="popup__title">Новое место</h2>          
-          <input type="text" name="elementText" class="popup__input popup__input_value_text">
-          <input type="text" name="elementSrc" class="popup__input popup__input_value_src">
+          <input type="text" name="elementText" placeholder="Название" class="popup__input popup__input_value_text">
+          <input type="text" name="elementSrc" placeholder="Ссылка на картинку" class="popup__input popup__input_value_src">
           <button type="submit" class="popup__save-button">Сохранить</button>
         </fieldset>
       </form>
@@ -62,14 +62,14 @@
     <div class="popup popup_type_show">
       <figure class="popup__card">
         <button type="button" class="popup__close-button"></button>
-        <img src="not_defined_image" alt="not_defined_image" class="popup__picture">
+        <img src="#" alt="not_defined_image" class="popup__picture">
         <figcaption class="popup__caption"></figcaption>
       </figure>
     </div>
 
     <template id="element">
       <figure class="element">
-        <img src="not_defined_image" alt="not_defined_image" class="element__picture">
+        <img src="#" alt="not_defined_image" class="element__picture">
         <figcaption class="element__caption">
           <h2 class="element__caption-text"></h2>
           <button type="button" class="element__caption-like"></button>
@@ -79,6 +79,7 @@
     </template>
   </div>
 
+  <script src="./js/config.js"></script>
   <script src="./js/script.js"></script>
 </body>
 </html>
