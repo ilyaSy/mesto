@@ -76,10 +76,10 @@ const initializeAddPopup = () => {
 const initializeShowPopup = (event) => {
   const picture = event.target;
   const caption = picture.nextElementSibling.firstElementChild;
-  const picturePopup = popup.querySelector('.popup__picture');
+  const picturePopup = popupShow.querySelector('.popup__picture');
   picturePopup.src = picture.src;
   picturePopup.alt = picture.alt;
-  popup.querySelector('.popup__caption').textContent = caption.textContent;
+  popupShow.querySelector('.popup__caption').textContent = caption.textContent;
 }
 
 //close popup function 
@@ -99,8 +99,7 @@ const submitPopupEdit = event => {
   profileName.textContent = popupInputName.value;
   profileJob.textContent = popupInputJob.value;
 
-  const popup = event.target.closest('.popup');
-  closePopup(popup);
+  closePopup(popupEdit);
 }
 
 //popup: add - submit function
@@ -118,8 +117,7 @@ const submitPopupAdd = event => {
   }
   addElement(createElement(card))
 
-  const popup = event.target.closest('.popup');
-  closePopup(popup);
+  closePopup(popupAdd);
 }
 
 //initialization
@@ -133,7 +131,7 @@ popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
 popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
-popupInputName.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-popupInputJob.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-popupInputText.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-popupInputSrc.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+// popupInputName.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+// popupInputJob.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+// popupInputText.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+// popupInputSrc.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
