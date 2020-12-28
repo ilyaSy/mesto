@@ -25,9 +25,9 @@ const initialCards = [
   }
 ];
 
-let popupEdit = document.querySelector('.popup_edit');
-let popupAdd = document.querySelector('.popup_add');
-let popupShow = document.querySelector('.popup_show');
+let popupEdit = document.querySelector('.popup_type_edit');
+let popupAdd = document.querySelector('.popup_type_add');
+let popupShow = document.querySelector('.popup_type_show');
 let popupEditForm = popupEdit.querySelector('.popup__container');
 let popupAddForm = popupAdd.querySelector('.popup__container');
 let popupInputName = popupEdit.querySelector('.popup__input_value_name');
@@ -81,23 +81,23 @@ const initializeCards = cards => {
 const openPopup = (popup, event) => {  
   popup.classList.add('popup_opened');
 
-  if (popup.classList.contains('popup_edit')) {
+  if (popup.classList.contains('popup_type_edit')) {
     // initialize fields in popup edit profile
     popupInputName.value = profileName.textContent;
     popupInputJob.value = profileJob.textContent;
   }
-  else if (popup.classList.contains('popup_add')) {
+  else if (popup.classList.contains('popup_type_add')) {
     // initialize fields in popup add card
     popupInputSrc.value = '';
     popupInputText.value = '';
   }
-  else if (popup.classList.contains('popup_show')) {
+  else if (popup.classList.contains('popup_type_show')) {
     const picture = event.target;
     const element = picture.closest('.element');
     const caption = element.querySelector('.element__caption-text');
-    popup.querySelector('.popup-show__picture').src = picture.src;
-    popup.querySelector('.popup-show__picture').alt = picture.alt;
-    popup.querySelector('.popup-show__caption').textContent = caption.textContent;
+    popup.querySelector('.popup__picture').src = picture.src;
+    popup.querySelector('.popup__picture').alt = picture.alt;
+    popup.querySelector('.popup__caption').textContent = caption.textContent;
   }
 }
 
@@ -111,11 +111,11 @@ const submitPopup = event => {
   event.preventDefault();
 
   const popup = event.target.closest('.popup');
-  if ( popup.classList.contains('popup_edit') ) {
+  if ( popup.classList.contains('popup_type_edit') ) {
     profileName.textContent = popupInputName.value;
     profileJob.textContent = popupInputJob.value;
   }
-  else if (popup.classList.contains('popup_add')) {
+  else if (popup.classList.contains('popup_type_add')) {
     const card = {
       link: popupInputSrc.value,
       name: popupInputText.value
