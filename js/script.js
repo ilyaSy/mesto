@@ -112,10 +112,20 @@ const submitPopup = event => {
 
   const popup = event.target.closest('.popup');
   if ( popup.classList.contains('popup_type_edit') ) {
+    if (popupInputName.value === '' || popupInputJob.value === ''){
+      alert("все поля должны быть заполнены")
+      return false;
+    }
+
     profileName.textContent = popupInputName.value;
     profileJob.textContent = popupInputJob.value;
   }
   else if (popup.classList.contains('popup_type_add')) {
+    if (popupInputSrc.value === '' || popupInputText.value === ''){
+      alert("все поля должны быть заполнены")
+      return false;
+    }
+
     const card = {
       link: popupInputSrc.value,
       name: popupInputText.value
@@ -138,3 +148,7 @@ popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
 popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopup);
 popupAddForm.addEventListener('submit', submitPopup);
+popupInputName.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+popupInputJob.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+popupInputText.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+popupInputSrc.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
