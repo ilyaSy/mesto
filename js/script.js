@@ -25,6 +25,7 @@ const initialCards = [
   }
 ];
 
+const elements = document.querySelector('.elements');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 const popupShow = document.querySelector('.popup_type_show');
@@ -67,8 +68,6 @@ const createElement = card => {
 
 //initialize Cards
 const initializeCards = cards => {
-  const elements = document.querySelector('.elements');
-
   if (cards.length > 0) {
     cards.forEach(card => {elements.prepend(createElement(card))});
   }
@@ -93,8 +92,7 @@ const openPopup = (popup, event) => {
   }
   else if (popup.classList.contains('popup_type_show')) {
     const picture = event.target;
-    const element = picture.closest('.element');
-    const caption = element.querySelector('.element__caption-text');
+    const caption = picture.nextElementSibling.firstElementChild;
     popup.querySelector('.popup__picture').src = picture.src;
     popup.querySelector('.popup__picture').alt = picture.alt;
     popup.querySelector('.popup__caption').textContent = caption.textContent;
@@ -130,7 +128,6 @@ const submitPopup = event => {
       link: popupInputSrc.value,
       name: popupInputText.value
     }
-    const elements = document.querySelector('.elements');
     elements.prepend(createElement(card))
   }
 
