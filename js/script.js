@@ -1,24 +1,29 @@
-/*let likes = document.querySelectorAll('.element__caption-like');
-for (let i = 0; i < likes.length; i++) {
-  likes[i].addEventListener('mouseover', function(){
-    if (!likes[i].classList.contains('element__caption-like_active')) {
-      likes[i].classList.add('element__caption-like_hover');
-    }
-  })
-
-  likes[i].addEventListener('mouseout', function(){
-    if (likes[i].classList.contains('element__caption-like_hover')) {
-      likes[i].classList.remove('element__caption-like_hover');
-    }
-  })
-
-  likes[i].addEventListener('click', function(){
-    likes[i].classList.toggle('element__caption-like_active');
-    likes[i].classList.contains('element__caption-like_hover') ?
-      likes[i].classList.remove('element__caption-like_hover') :
-      likes[i].classList.add('element__caption-like_hover');
-  })
-}*/
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
 let popup = document.querySelector('.popup');
 let popupForm = popup.querySelector('.popup__container');
@@ -30,6 +35,25 @@ let profileJob = profile.querySelector('.profile__job');
 
 let profileEditBtn = profile.querySelector('.profile__edit-button');
 let popupCloseBtn = popup.querySelector('.popup__close-button');
+
+//initialize Cards
+const initializeCards = cards => {
+  const elements = document.querySelector('.elements');
+
+  if (cards.length > 0) {
+    cards.forEach(card => {
+      const elementTmplt = document.querySelector('#element');
+      const element = elementTmplt.content.cloneNode(true);
+      element.querySelector('.element__picture').src = card.link;
+      element.querySelector('.element__picture').alt = `Фото: ${card.name}`;
+      element.querySelector('.element__caption-text').textContent = card.name;
+      elements.prepend(element);
+    });
+  }
+  else {
+    elements.textContent = 'Нет фотографий';
+  }
+}
 
 //open popup function 
 const openPopup = () => {
@@ -45,8 +69,6 @@ const closePopup = () => {
   popup.classList.remove('popup_opened');
 }
 
-//Название функции должно начинаться с глагола, отражая то действие, которое функция выполняет.
-//разве submit - не глагол ?
 //save popup function 
 const submitPopup = evt => {
   evt.preventDefault();
@@ -55,6 +77,9 @@ const submitPopup = evt => {
 
   closePopup();
 }
+
+//initialization
+initializeCards(initialCards);
 
 //add listeners
 profileEditBtn.addEventListener('click', openPopup);
