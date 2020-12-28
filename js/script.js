@@ -25,24 +25,24 @@ const initialCards = [
   }
 ];
 
-let popupEdit = document.querySelector('.popup_type_edit');
-let popupAdd = document.querySelector('.popup_type_add');
-let popupShow = document.querySelector('.popup_type_show');
-let popupEditForm = popupEdit.querySelector('.popup__container');
-let popupAddForm = popupAdd.querySelector('.popup__container');
-let popupInputName = popupEdit.querySelector('.popup__input_value_name');
-let popupInputJob = popupEdit.querySelector('.popup__input_value_job');
-let popupInputText = popupAdd.querySelector('.popup__input_value_text');
-let popupInputSrc = popupAdd.querySelector('.popup__input_value_src');
-let popupEditCloseBtn = popupEdit.querySelector('.popup__close-button');
-let popupAddCloseBtn = popupAdd.querySelector('.popup__close-button');
-let popupShowCloseBtn = popupShow.querySelector('.popup__close-button');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
+const popupShow = document.querySelector('.popup_type_show');
+const popupEditForm = popupEdit.querySelector('.popup__container');
+const popupAddForm = popupAdd.querySelector('.popup__container');
+const popupInputName = popupEdit.querySelector('.popup__input_value_name');
+const popupInputJob = popupEdit.querySelector('.popup__input_value_job');
+const popupInputText = popupAdd.querySelector('.popup__input_value_text');
+const popupInputSrc = popupAdd.querySelector('.popup__input_value_src');
+const popupEditCloseBtn = popupEdit.querySelector('.popup__close-button');
+const popupAddCloseBtn = popupAdd.querySelector('.popup__close-button');
+const popupShowCloseBtn = popupShow.querySelector('.popup__close-button');
 
-let profile = document.querySelector('.profile');
-let profileName = profile.querySelector('.profile__name');
-let profileJob = profile.querySelector('.profile__job');
-let profileEditBtn = profile.querySelector('.profile__edit-button');
-let profileAddBtn = profile.querySelector('.profile__add-button');
+const profile = document.querySelector('.profile');
+const profileName = profile.querySelector('.profile__name');
+const profileJob = profile.querySelector('.profile__job');
+const profileEditBtn = profile.querySelector('.profile__edit-button');
+const profileAddBtn = profile.querySelector('.profile__add-button');
 
 //add element to section
 const createElement = card => {
