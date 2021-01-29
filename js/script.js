@@ -1,8 +1,12 @@
+const popupAddClassName = 'popup_type_add';
+const popupEditClassName = 'popup_type_edit';
+const popupShowClassName = 'popup_type_show';
+
 const elementTmplt = document.querySelector('#element');
 const elements = document.querySelector('.elements');
-const popupEdit = document.querySelector('.popup_type_edit');
-const popupAdd = document.querySelector('.popup_type_add');
-const popupShow = document.querySelector('.popup_type_show');
+const popupEdit = document.querySelector(`.${popupEditClassName}`);
+const popupAdd = document.querySelector(`.${popupAddClassName}`);
+const popupShow = document.querySelector(`.${popupShowClassName}`);
 const popupEditForm = popupEdit.querySelector('.popup__container');
 const popupAddForm = popupAdd.querySelector('.popup__container');
 const popupInputName = popupEdit.querySelector('.popup__input_value_name');
@@ -18,6 +22,15 @@ const profileName = profile.querySelector('.profile__name');
 const profileJob = profile.querySelector('.profile__job');
 const profileEditBtn = profile.querySelector('.profile__edit-button');
 const profileAddBtn = profile.querySelector('.profile__add-button');
+
+const validationObjects = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 //create element
 const createElement = card => {
@@ -56,20 +69,28 @@ const initializeCards = cards => {
 }
 
 //open popup function 
-const openPopup = (popup) => {  
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', event => {if (event.key === 'Escape') closePopup(popup)}, {once: true});
+}
+
+//close popup function 
+const closePopup = popup => {
+  popup.classList.remove('popup_opened');
 }
 
 //popup: edit - initialize input fields
 const initializeEditPopup = () => {
   popupInputName.value = profileName.textContent;
   popupInputJob.value = profileJob.textContent;
+  initializeValidation(validationObjects);
 }
 
 //popup: add - initialize/clear input fields
 const initializeAddPopup = () => {
   popupInputSrc.value = '';
   popupInputText.value = '';
+  initializeValidation(validationObjects);
 }
 
 //popup: show - initialize/set src, alt and caption from card
@@ -80,11 +101,6 @@ const initializeShowPopup = (event) => {
   picturePopup.src = picture.src;
   picturePopup.alt = picture.alt;
   popupShow.querySelector('.popup__caption').textContent = caption.textContent;
-}
-
-//close popup function 
-const closePopup = popup => {
-  popup.classList.remove('popup_opened');
 }
 
 //popup: edit - submit function
@@ -123,6 +139,10 @@ const submitPopupAdd = event => {
 //initialization
 initializeCards(initialCards);
 
+//enable form fields validation
+initializeValidation(validationObjects);
+enableValidation(validationObjects);
+
 //add listeners
 profileEditBtn.addEventListener('click', () => {openPopup(popupEdit); initializeEditPopup();});
 profileAddBtn.addEventListener('click', () => {openPopup(popupAdd); initializeAddPopup();});
@@ -131,7 +151,8 @@ popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
 popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
-// popupInputName.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-// popupInputJob.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-// popupInputText.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
-// popupInputSrc.addEventListener('keypress', (event) => {if (event.key === 'enter') {submitPopup}});
+
+//add close popup listeners (esc + click)
+document.addEventListener('click', evt => {if (evt.target.classList.contains(popupEditClassName)) closePopup(popupEdit)});
+document.addEventListener('click', evt => {if (evt.target.classList.contains(popupAddClassName)) closePopup(popupAdd)});
+document.addEventListener('click', evt => {if (evt.target.classList.contains(popupShowClassName)) closePopup(popupShow)});
