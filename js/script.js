@@ -79,7 +79,6 @@ const closeByClickOnOverlay = (event) => {
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', event => {if (event.key === 'Escape') closePopup(popup)}, {once: true});
-  popup.addEventListener('click', closeByClickOnOverlay, {once: true});
 }
 
 //close popup function 
@@ -149,6 +148,6 @@ popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
 
 //add close popup listener (click)
-// popupAdd.addEventListener('click', closeByClickOnOverlay);
-// popupEdit.addEventListener('click', closeByClickOnOverlay);
-// popupShow.addEventListener('click', closeByClickOnOverlay);
+popupAdd.addEventListener('click', closeByClickOnOverlay);
+popupEdit.addEventListener('click', closeByClickOnOverlay);
+popupShow.addEventListener('click', closeByClickOnOverlay);
