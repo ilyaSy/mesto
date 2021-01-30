@@ -48,7 +48,7 @@ const createElement = card => {
     event.target.closest('.element').remove();
   });
 
-  picture.addEventListener('click', (event) => {openPopup(popupShow); initializeShowPopup(event)});
+  picture.addEventListener('click', (event) => {openPopup(popupShow); initializeShowPopup(card.link, card.name)});
   
   return element;
 }
@@ -68,10 +68,18 @@ const initializeCards = cards => {
   }
 }
 
+//popup: close it by click on overlay
+const closeByClickOnOverlay = (event) => {
+  if (event.target.classList.contains('popup_opened')) {
+    closePopup(event.target);
+  }
+}
+
 //open popup function 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', event => {if (event.key === 'Escape') closePopup(popup)}, {once: true});
+  popup.addEventListener('click', closeByClickOnOverlay, {once: true});
 }
 
 //close popup function 
@@ -94,23 +102,16 @@ const initializeAddPopup = () => {
 }
 
 //popup: show - initialize/set src, alt and caption from card
-const initializeShowPopup = (event) => {
-  const picture = event.target;
-  const caption = picture.nextElementSibling.firstElementChild;
+const initializeShowPopup = (src, name) => {
   const picturePopup = popupShow.querySelector('.popup__picture');
-  picturePopup.src = picture.src;
-  picturePopup.alt = picture.alt;
-  popupShow.querySelector('.popup__caption').textContent = caption.textContent;
+  picturePopup.src = 'asd';
+  picturePopup.alt = `Фото: ${name}`;
+  popupShow.querySelector('.popup__caption').textContent = name;
 }
 
 //popup: edit - submit function
 const submitPopupEdit = event => {
   event.preventDefault();
-
-  if (popupInputName.value === '' || popupInputJob.value === ''){
-    alert("все поля должны быть заполнены")
-    return false;
-  }
 
   profileName.textContent = popupInputName.value;
   profileJob.textContent = popupInputJob.value;
@@ -122,11 +123,6 @@ const submitPopupEdit = event => {
 const submitPopupAdd = event => {
   event.preventDefault();  
   
-  if (popupInputSrc.value === '' || popupInputText.value === ''){
-    alert("все поля должны быть заполнены")
-    return false;
-  }
-
   const card = {
     link: popupInputSrc.value,
     name: popupInputText.value
@@ -152,7 +148,7 @@ popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
 
-//add close popup listeners (esc + click)
-document.addEventListener('click', evt => {if (evt.target.classList.contains(popupEditClassName)) closePopup(popupEdit)});
-document.addEventListener('click', evt => {if (evt.target.classList.contains(popupAddClassName)) closePopup(popupAdd)});
-document.addEventListener('click', evt => {if (evt.target.classList.contains(popupShowClassName)) closePopup(popupShow)});
+//add close popup listener (click)
+// popupAdd.addEventListener('click', closeByClickOnOverlay);
+// popupEdit.addEventListener('click', closeByClickOnOverlay);
+// popupShow.addEventListener('click', closeByClickOnOverlay);
