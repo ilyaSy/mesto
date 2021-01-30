@@ -104,7 +104,7 @@ const initializeAddPopup = () => {
 //popup: show - initialize/set src, alt and caption from card
 const initializeShowPopup = (src, name) => {
   const picturePopup = popupShow.querySelector('.popup__picture');
-  picturePopup.src = 'asd';
+  picturePopup.src = src;
   picturePopup.alt = `Фото: ${name}`;
   popupShow.querySelector('.popup__caption').textContent = name;
 }
