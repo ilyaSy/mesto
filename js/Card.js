@@ -1,14 +1,11 @@
+import {initializeShowPopup, popupShow, openPopup} from './script.js';
+
 export default class Card {
   constructor(props){
     this._card = props.card;
     this._cardSelector = props.cardSelector;
 
-    this._popupShow = document.querySelector('.popup_type_show');
-    this._popupShowCloseBtn = this._popupShow.querySelector('.popup__close-button');
-
-    this._openPopup = props.openPopup;
-    this._closePopup = props.closePopup;
-    this._closeByClickOnOverlay = props.closeByClickOnOverlay;
+    // this._openPopup = props.openPopup;
   }
 
   _handleLike = event => {
@@ -20,27 +17,14 @@ export default class Card {
   }
 
   _handleOpenPopup = () => {
-    this._openPopup(this._popupShow);
-    this._initializeShowPopup(this._card.link, this._card.name)
-  }
-
-  _handleClosePopup = () => {
-    this._closePopup(this._popupShow);
-  }
-
-  _initializeShowPopup(src, name) {
-    const picturePopup = this._popupShow.querySelector('.popup__picture');
-    picturePopup.src = src;
-    picturePopup.alt = `Фото: ${name}`;
-    this._popupShow.querySelector('.popup__caption').textContent = name;
+    openPopup(popupShow);
+    initializeShowPopup(this._card.link, this._card.name)
   }
 
   _setEventListeners(){
     this._element.querySelector('.element__caption-like').addEventListener('click', this._handleLike);
     this._element.querySelector('.element__delete-button').addEventListener('click', this._handleDelete);
     this._picture.addEventListener('click', this._handleOpenPopup);
-    this._popupShowCloseBtn.addEventListener('click', this._handleClosePopup);
-    this._popupShow.addEventListener('click', this._closeByClickOnOverlay.bind(this));
   }
 
   _getTemplate(){
@@ -58,9 +42,4 @@ export default class Card {
 
     return this._element;
   }
-  
-  //add element to section: elements
-  // const addElement = element => {
-  //   elements.prepend(element);
-  // }
 }

@@ -2,14 +2,13 @@ import {initialCards} from './config.js';
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
 
-const popupAddClassName = 'popup_type_add';
-const popupEditClassName = 'popup_type_edit';
-
+const popupShow = document.querySelector('.popup_type_show');
 const elements = document.querySelector('.elements');
-const popupEdit = document.querySelector(`.${popupEditClassName}`);
-const popupAdd = document.querySelector(`.${popupAddClassName}`);
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
 const popupEditForm = popupEdit.querySelector('.popup__container');
 const popupAddForm = popupAdd.querySelector('.popup__container');
+const popupShowCloseBtn = popupShow.querySelector('.popup__close-button');
 const popupInputName = popupEdit.querySelector('.popup__input_value_name');
 const popupInputJob = popupEdit.querySelector('.popup__input_value_job');
 const popupInputText = popupAdd.querySelector('.popup__input_value_text');
@@ -43,9 +42,6 @@ const initializeCards = cards => {
       const cardElement = new Card({
         card: card,
         cardSelector: "#element",
-        openPopup: openPopup,
-        closePopup: closePopup,
-        closeByClickOnOverlay: closeByClickOnOverlay
       });
 
       addElement(cardElement.generate())
@@ -57,21 +53,30 @@ const initializeCards = cards => {
 }
 
 //popup: close it by click on overlay
-const closeByClickOnOverlay = (event) => {
+const closeByClickOnOverlay = event => {
   if (event.target.classList.contains('popup_opened')) {
     closePopup(event.target);
+  }
+}
+
+//close popup by escape function
+const closeByEscapeBtn = event => {
+  if (event.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened')
+    closePopup(popup)
   }
 }
 
 //open popup function 
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', event => {if (event.key === 'Escape') closePopup(popup)}, {once: true});
+  document.addEventListener('keydown', closeByEscapeBtn);
 }
 
 //close popup function 
 const closePopup = popup => {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscapeBtn);
 }
 
 //popup: edit - initialize input fields
@@ -86,6 +91,13 @@ const initializeAddPopup = () => {
   popupInputSrc.value = '';
   popupInputText.value = '';
   validatePopupAddForm.initializeValidation();
+}
+
+const initializeShowPopup = (src, name) => {
+  const picturePopup = popupShow.querySelector('.popup__picture');
+  picturePopup.src = src;
+  picturePopup.alt = `Фото: ${name}`;
+  popupShow.querySelector('.popup__caption').textContent = name;
 }
 
 //popup: edit - submit function
@@ -137,9 +149,13 @@ profileEditBtn.addEventListener('click', () => {openPopup(popupEdit); initialize
 profileAddBtn.addEventListener('click', () => {openPopup(popupAdd); initializeAddPopup();});
 popupEditCloseBtn.addEventListener('click', () => {closePopup(popupEdit)});
 popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
+popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
 
 //add close popup listener (click)
 popupAdd.addEventListener('click', closeByClickOnOverlay);
 popupEdit.addEventListener('click', closeByClickOnOverlay);
+popupShow.addEventListener('click', closeByClickOnOverlay);
+
+export {initializeShowPopup, popupShow, openPopup};
