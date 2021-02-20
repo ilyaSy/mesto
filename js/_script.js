@@ -1,6 +1,3 @@
-import {initialCards} from './config.js';
-import FormValidator from './FormValidator.js';
-
 const popupAddClassName = 'popup_type_add';
 const popupEditClassName = 'popup_type_edit';
 const popupShowClassName = 'popup_type_show';
@@ -27,7 +24,7 @@ const profileEditBtn = profile.querySelector('.profile__edit-button');
 const profileAddBtn = profile.querySelector('.profile__add-button');
 
 const validationObjects = {
-  // formSelector: '.popup__container',
+  formSelector: '.popup__container',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
@@ -93,16 +90,14 @@ const closePopup = popup => {
 const initializeEditPopup = () => {
   popupInputName.value = profileName.textContent;
   popupInputJob.value = profileJob.textContent;
-  // initializeValidation(validationObjects);
-  validatePopupEditForm.initializeValidation();
+  initializeValidation(validationObjects);
 }
 
 //popup: add - initialize/clear input fields
 const initializeAddPopup = () => {
   popupInputSrc.value = '';
   popupInputText.value = '';
-  //initializeValidation(validationObjects);
-  validatePopupAddForm.initializeValidation();
+  initializeValidation(validationObjects);
 }
 
 //popup: show - initialize/set src, alt and caption from card
@@ -140,13 +135,8 @@ const submitPopupAdd = event => {
 initializeCards(initialCards);
 
 //enable form fields validation
-const validatePopupEditForm = new FormValidator(validationObjects, popupEditForm);
-validatePopupEditForm.initializeValidation();
-validatePopupEditForm.enableValidation();
-
-const validatePopupAddForm = new FormValidator(validationObjects, popupAddForm);
-validatePopupAddForm.initializeValidation();
-validatePopupAddForm.enableValidation();
+initializeValidation(validationObjects);
+enableValidation(validationObjects);
 
 //add listeners
 profileEditBtn.addEventListener('click', () => {openPopup(popupEdit); initializeEditPopup();});
