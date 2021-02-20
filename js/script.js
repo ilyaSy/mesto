@@ -1,15 +1,13 @@
 import {initialCards} from './config.js';
 import FormValidator from './FormValidator.js';
+import Card from './Card.js';
 
 const popupAddClassName = 'popup_type_add';
 const popupEditClassName = 'popup_type_edit';
-const popupShowClassName = 'popup_type_show';
 
-const elementTmplt = document.querySelector('#element');
 const elements = document.querySelector('.elements');
 const popupEdit = document.querySelector(`.${popupEditClassName}`);
 const popupAdd = document.querySelector(`.${popupAddClassName}`);
-const popupShow = document.querySelector(`.${popupShowClassName}`);
 const popupEditForm = popupEdit.querySelector('.popup__container');
 const popupAddForm = popupAdd.querySelector('.popup__container');
 const popupInputName = popupEdit.querySelector('.popup__input_value_name');
@@ -18,7 +16,6 @@ const popupInputText = popupAdd.querySelector('.popup__input_value_text');
 const popupInputSrc = popupAdd.querySelector('.popup__input_value_src');
 const popupEditCloseBtn = popupEdit.querySelector('.popup__close-button');
 const popupAddCloseBtn = popupAdd.querySelector('.popup__close-button');
-const popupShowCloseBtn = popupShow.querySelector('.popup__close-button');
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
@@ -27,34 +24,12 @@ const profileEditBtn = profile.querySelector('.profile__edit-button');
 const profileAddBtn = profile.querySelector('.profile__add-button');
 
 const validationObjects = {
-  // formSelector: '.popup__container',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
-
-//create element
-const createElement = card => {
-  const element = elementTmplt.content.cloneNode(true);
-  const picture = element.querySelector('.element__picture');
-  picture.src = card.link;
-  picture.alt = `Фото: ${card.name}`;
-  element.querySelector('.element__caption-text').textContent = card.name;
-
-  element.querySelector('.element__caption-like').addEventListener('click', (event) => {
-    event.target.classList.toggle('element__caption-like_active');
-  });
-
-  element.querySelector('.element__delete-button').addEventListener('click', (event) => {
-    event.target.closest('.element').remove();
-  });
-
-  picture.addEventListener('click', (event) => {openPopup(popupShow); initializeShowPopup(card.link, card.name)});
-  
-  return element;
-}
 
 //add element to section: elements
 const addElement = element => {
@@ -64,7 +39,17 @@ const addElement = element => {
 //initialize Cards
 const initializeCards = cards => {
   if (cards.length > 0) {
-    cards.forEach(card => {addElement(createElement(card))});
+    cards.forEach(card => {
+      const cardElement = new Card({
+        card: card,
+        cardSelector: "#element",
+        openPopup: openPopup,
+        closePopup: closePopup,
+        closeByClickOnOverlay: closeByClickOnOverlay
+      });
+
+      addElement(cardElement.generate())
+    });
   }
   else {
     elements.textContent = 'Нет фотографий';
@@ -93,7 +78,6 @@ const closePopup = popup => {
 const initializeEditPopup = () => {
   popupInputName.value = profileName.textContent;
   popupInputJob.value = profileJob.textContent;
-  // initializeValidation(validationObjects);
   validatePopupEditForm.initializeValidation();
 }
 
@@ -101,16 +85,7 @@ const initializeEditPopup = () => {
 const initializeAddPopup = () => {
   popupInputSrc.value = '';
   popupInputText.value = '';
-  //initializeValidation(validationObjects);
   validatePopupAddForm.initializeValidation();
-}
-
-//popup: show - initialize/set src, alt and caption from card
-const initializeShowPopup = (src, name) => {
-  const picturePopup = popupShow.querySelector('.popup__picture');
-  picturePopup.src = src;
-  picturePopup.alt = `Фото: ${name}`;
-  popupShow.querySelector('.popup__caption').textContent = name;
 }
 
 //popup: edit - submit function
@@ -131,7 +106,16 @@ const submitPopupAdd = event => {
     link: popupInputSrc.value,
     name: popupInputText.value
   }
-  addElement(createElement(card))
+
+  const cardElement = new Card({
+    card: card,
+    cardSelector: "#element",
+    openPopup: openPopup,
+    closePopup: closePopup,
+    closeByClickOnOverlay: closeByClickOnOverlay
+  });
+
+  addElement(cardElement.generate())
 
   closePopup(popupAdd);
 }
@@ -153,11 +137,9 @@ profileEditBtn.addEventListener('click', () => {openPopup(popupEdit); initialize
 profileAddBtn.addEventListener('click', () => {openPopup(popupAdd); initializeAddPopup();});
 popupEditCloseBtn.addEventListener('click', () => {closePopup(popupEdit)});
 popupAddCloseBtn.addEventListener('click', () => {closePopup(popupAdd)});
-popupShowCloseBtn.addEventListener('click', () => {closePopup(popupShow)});
 popupEditForm.addEventListener('submit', submitPopupEdit);
 popupAddForm.addEventListener('submit', submitPopupAdd);
 
 //add close popup listener (click)
 popupAdd.addEventListener('click', closeByClickOnOverlay);
 popupEdit.addEventListener('click', closeByClickOnOverlay);
-popupShow.addEventListener('click', closeByClickOnOverlay);
