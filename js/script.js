@@ -98,6 +98,8 @@ const initializeShowPopup = (src, name) => {
   picturePopup.src = src;
   picturePopup.alt = `Фото: ${name}`;
   popupShow.querySelector('.popup__caption').textContent = name;
+
+  openPopup(popupShow);
 }
 
 //popup: edit - submit function
@@ -121,10 +123,7 @@ const submitPopupAdd = event => {
 
   const cardElement = new Card({
     card: card,
-    cardSelector: "#element",
-    openPopup: openPopup,
-    closePopup: closePopup,
-    closeByClickOnOverlay: closeByClickOnOverlay
+    cardSelector: "#element"
   });
 
   addElement(cardElement.generate())
@@ -158,4 +157,4 @@ popupAdd.addEventListener('click', closeByClickOnOverlay);
 popupEdit.addEventListener('click', closeByClickOnOverlay);
 popupShow.addEventListener('click', closeByClickOnOverlay);
 
-export {initializeShowPopup, popupShow, openPopup};
+export {initializeShowPopup};

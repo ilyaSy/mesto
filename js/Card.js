@@ -1,4 +1,4 @@
-import {initializeShowPopup, popupShow, openPopup} from './script.js';
+import {initializeShowPopup} from './script.js';
 
 export default class Card {
   constructor(props){
@@ -17,7 +17,6 @@ export default class Card {
   }
 
   _handleOpenPopup = () => {
-    openPopup(popupShow);
     initializeShowPopup(this._card.link, this._card.name)
   }
 
