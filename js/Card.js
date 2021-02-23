@@ -1,11 +1,8 @@
-import {initializeShowPopup} from './script.js';
-
 export default class Card {
   constructor(props){
     this._card = props.card;
     this._cardSelector = props.cardSelector;
-
-    // this._openPopup = props.openPopup;
+    this._initializeShowPopup = props.initializeShowPopup;
   }
 
   _handleLike = event => {
@@ -17,7 +14,7 @@ export default class Card {
   }
 
   _handleOpenPopup = () => {
-    initializeShowPopup(this._card.link, this._card.name)
+    this._initializeShowPopup(this._card.link, this._card.name)
   }
 
   _setEventListeners(){

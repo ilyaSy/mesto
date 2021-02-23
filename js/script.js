@@ -42,6 +42,7 @@ const initializeCards = cards => {
       const cardElement = new Card({
         card: card,
         cardSelector: "#element",
+        initializeShowPopup: initializeShowPopup
       });
 
       addElement(cardElement.generate())
@@ -123,7 +124,8 @@ const submitPopupAdd = event => {
 
   const cardElement = new Card({
     card: card,
-    cardSelector: "#element"
+    cardSelector: "#element",
+    initializeShowPopup: initializeShowPopup
   });
 
   addElement(cardElement.generate())
