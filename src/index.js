@@ -46,17 +46,16 @@ const initializeCards = cards => {
 }
 
 //------------------       popup - user profile      ---------------------
+const user = new UserInfo(profileNameSelector, profileJobSelector);
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
   handleFormSubmit: (event) => {
     event.preventDefault();
-
-    const user = new UserInfo(profileNameSelector, profileJobSelector);
+    
     user.setUserInfo(popupProfile._getInputValues());
   
     popupProfile.closePopup();
   },
   handleInitialize: () => {
-    const user = new UserInfo(profileNameSelector, profileJobSelector);
     const {profileName: name, profileJob: job} = user.getUserInfo();
     popupInputName.value = name;
     popupInputJob.value = job;
