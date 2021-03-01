@@ -1,8 +1,7 @@
 export default class Card {
-  constructor({card, cardSelector}, openPopup){
+  constructor({card, cardSelector}, openPopup = () => {}){
     this._card = card;
     this._cardSelector = cardSelector;
-    // this._initializeShowPopup = props.initializeShowPopup;
     this._openPopup = openPopup;
   }
 
@@ -15,7 +14,7 @@ export default class Card {
   }
 
   _handleOpenPopup = () => {
-    this._openPopup(this._card.srcUrl, this._card.name)
+    this._openPopup(this._card.link, this._card.name)
   }
 
   _setEventListeners(){
