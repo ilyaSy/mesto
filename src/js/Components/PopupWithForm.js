@@ -9,8 +9,8 @@ export default class PopupWithForm extends Popup {
   }
 
   openPopup = () => {
-    super.openPopup();
     this._handleInitialize();
+    super.openPopup();
   }
 
   _getInputValues = () => {

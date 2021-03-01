@@ -4,8 +4,8 @@
   "description": "Yandex.Praktikum project",
   "main": "index.js",
   "scripts": {
-    "build-prod": "webpack --mode production",
-    "build-dev": "webpack serve"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
