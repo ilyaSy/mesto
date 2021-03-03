@@ -1,11 +1,11 @@
-import './pages/index.css';
-import initialCards from './js/Utils/config';
-import FormValidator from './js/Components/FormValidator';
-import Card from './js/Components/Card';
-import PopupWithForm from './js/Components/PopupWithForm';
-import PopupWithImage from './js/Components/PopupWithImage';
-import Section from './js/Components/Section';
-import UserInfo from './js/Components/UserInfo';
+import './index.css';
+import initialCards from '../js/utils/config';
+import FormValidator from '../js/components/FormValidator';
+import Card from '../js/components/Card';
+import PopupWithForm from '../js/components/PopupWithForm';
+import PopupWithImage from '../js/components/PopupWithImage';
+import Section from '../js/components/Section';
+import UserInfo from '../js/components/UserInfo';
 import {
   cardPopupTmplSelector,
   cardElementSelector,
@@ -15,29 +15,32 @@ import {
   validationObjects,
   popupInputName,
   popupInputJob,
-  popupInputSrc,
-  popupInputText,
   profileEditBtn,
   profileAddBtn,
   popupEditForm,
   popupAddForm
-} from './js/Utils/constants';
+} from '../js/utils/constants';
+
+//card popup
+const popupCard = new PopupWithImage(cardPopupSelector)
+popupCard.setEventListeners();
+
+//main section object
+const section = new Section({
+  items: initialCards, 
+  renderer: (card) => {
+    // popupCard.setEventListeners();
+
+    const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
+
+    //cardElement.generate и есть так функция createCard о которой вы говорите
+    section.addItem(cardElement.generate())
+  }
+}, cardElementSelector);
 
 //initialize Cards
-const initializeCards = cards => {
-  if (cards.length > 0) {
-    const section = new Section({
-      items: cards, 
-      renderer: (card) => {
-        const popupCard = new PopupWithImage(cardPopupSelector)
-        popupCard.setEventListeners();
-
-        const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
-
-        section.addItem(cardElement.generate())
-      }
-    }, cardElementSelector);
-
+const initializeCards = () => {
+  if (initialCards.length > 0) {
     section.renderItems();
   }
   else {
@@ -48,12 +51,13 @@ const initializeCards = cards => {
 //------------------       popup - user profile      ---------------------
 const user = new UserInfo(profileNameSelector, profileJobSelector);
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
-  handleFormSubmit: (event) => {
+
+  handleFormSubmit: (event, userData) => {
     event.preventDefault();
     
-    user.setUserInfo(popupProfile._getInputValues());
+    user.setUserInfo(userData);
   
-    popupProfile.closePopup();
+    popupProfile.closePopup(validatePopupEditForm.initializeValidation);
   },
   handleInitialize: () => {
     const {profileName: name, profileJob: job} = user.getUserInfo();
@@ -68,19 +72,17 @@ popupProfile.setEventListeners();
 
 //------------------       popup - add new card      ---------------------
 const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
-  handleFormSubmit: (event) => {
+  handleFormSubmit: (event, cardData) => {
     event.preventDefault();
 
-    const cardElement = new Card({ card: popupAddCard._getInputValues(), cardSelector: cardPopupTmplSelector });
+    const cardElement = new Card({ card: cardData, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
 
-    const section = new Section({}, cardElementSelector);
+    //cardElement.generate и есть так функция createCard о которой вы говорите
     section.addItem(cardElement.generate())
 
     popupAddCard.closePopup();
   },
   handleInitialize: () => {
-    popupInputSrc.value = '';
-    popupInputText.value = '';
     validatePopupAddForm.initializeValidation();
   }
 });
@@ -88,7 +90,7 @@ const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
 popupAddCard.setEventListeners();
 
 //initialization
-initializeCards(initialCards);
+initializeCards();
 
 //enable form fields validation
 const validatePopupEditForm = new FormValidator(validationObjects, popupEditForm);
