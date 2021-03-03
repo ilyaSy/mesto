@@ -27,18 +27,15 @@ popupCard.setEventListeners();
 
 function createCard(card) {
   const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
-  return cardElement.generate(cardElement);
+  return cardElement.generate();
 }
 
 //main section object
 const section = new Section({
   items: initialCards, 
   renderer: (card) => {
-    // popupCard.setEventListeners();
-
     const cardElement = createCard(card);
-
-    //cardElement.generate и есть так функция createCard о которой вы говорите
+    
     section.addItem(cardElement)
   }
 }, cardElementSelector);
@@ -82,7 +79,6 @@ const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
 
     const cardElement = createCard(card);
 
-    //cardElement.generate и есть так функция createCard о которой вы говорите
     section.addItem(cardElement)
 
     popupAddCard.closePopup();
