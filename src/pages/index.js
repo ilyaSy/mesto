@@ -25,16 +25,21 @@ import {
 const popupCard = new PopupWithImage(cardPopupSelector)
 popupCard.setEventListeners();
 
+function createCard(card) {
+  const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
+  return cardElement.generate(cardElement);
+}
+
 //main section object
 const section = new Section({
   items: initialCards, 
   renderer: (card) => {
     // popupCard.setEventListeners();
 
-    const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
+    const cardElement = createCard(card);
 
     //cardElement.generate и есть так функция createCard о которой вы говорите
-    section.addItem(cardElement.generate())
+    section.addItem(cardElement)
   }
 }, cardElementSelector);
 
@@ -72,13 +77,13 @@ popupProfile.setEventListeners();
 
 //------------------       popup - add new card      ---------------------
 const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
-  handleFormSubmit: (event, cardData) => {
+  handleFormSubmit: (event, card) => {
     event.preventDefault();
 
-    const cardElement = new Card({ card: cardData, cardSelector: cardPopupTmplSelector }, popupCard.openPopup);
+    const cardElement = createCard(card);
 
     //cardElement.generate и есть так функция createCard о которой вы говорите
-    section.addItem(cardElement.generate())
+    section.addItem(cardElement)
 
     popupAddCard.closePopup();
   },
