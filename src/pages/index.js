@@ -57,7 +57,7 @@ const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
     
     user.setUserInfo(userData);
   
-    popupProfile.closePopup(validatePopupEditForm.initializeValidation);
+    popupProfile.closePopup();
   },
   handleInitialize: () => {
     const {profileName: name, profileJob: job} = user.getUserInfo();
