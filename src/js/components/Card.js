@@ -1,12 +1,23 @@
 export default class Card {
-  constructor({card, cardSelector}, openPopup = () => {}){
+  constructor({card, cardSelector}, 
+    openPopup = () => {}, 
+    likeCard = () => {}, 
+    confirm = () => {}){
     this._card = card;
     this._cardSelector = cardSelector;
     this._openPopup = openPopup;
+    this._likeCard = likeCard;
+    this._confirm = confirm;
   }
 
+  // likeCard(cardId, isLiked)
   _handleLike = event => {
-    event.target.classList.toggle('element__caption-like_active');
+    const isLiked = event.target.classList.contains('element__caption-like_active')
+    this._likeCard(this._card._id, isLiked)
+      .then(card => {
+        this._captionLikeCount.textContent = card.likes ? card.likes.length : 0;   
+        event.target.classList.toggle('element__caption-like_active');
+      })
   }
 
   _handleDelete = event => {
@@ -33,6 +44,9 @@ export default class Card {
     this._picture.src = this._card.link;
     this._picture.alt = `Фото: ${this._card.name}`;
     this._element.querySelector('.element__caption-text').textContent = this._card.name;
+
+    this._captionLikeCount = this._element.querySelector('.element__caption-like-count');
+    this._captionLikeCount.textContent = this._card.likes ? this._card.likes.length : 0;
     
     this._setEventListeners();
 

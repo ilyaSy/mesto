@@ -1,8 +1,10 @@
 export const cardElementSelector = '.elements';
+export const cardElement = document.querySelector(cardElementSelector);
 export const cardPopupTmplSelector = '#element';
 export const cardPopupSelector = '.popup_type_show';
 export const profileNameSelector = '.profile__name';
 export const profileJobSelector = '.profile__job';
+export const profileAvatarSelector = '.profile__avatar';
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
 export const popupEditForm = popupEdit.querySelector('.popup__container');
@@ -21,3 +23,7 @@ export const validationObjects = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 };
+
+export const tokenAuth = '30b18b22-df4e-456d-bb26-16cda3a69c12';
+export const tokenGroup = 'cohort-21';
+export const apiURL = 'https://mesto.nomoreparties.co/v1';

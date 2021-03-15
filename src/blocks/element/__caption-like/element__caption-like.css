@@ -1,6 +1,7 @@
 .element__caption-like {
-  margin: 25px 15px 31px 8px;
-  padding: 0;
+  /* margin: 25px 15px 31px 8px; */
+  margin: 0;
+  padding: 100% 0 0 0;
   width: 20.76px;
   border: 0;
   background-color: #fff;
@@ -15,7 +16,3 @@
   cursor: pointer;
   background-image: url('../../../images/heart_hover.svg');
 }
-
-/* .element__caption-like:active {
-  background-image: url('../../../images/heart_active.svg');
-} */

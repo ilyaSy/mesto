@@ -69,14 +69,28 @@
       </figure>
     </div>
 
+    <div class="popup popup_type_confirm">
+      <form action="/" name="popupConfirm" class="popup__container" novalidate>
+        <button type="button" class="popup__close-button"></button>
+        <fieldset class="popup__fieldset">
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button type="submit" class="popup__save-button">Да</button>
+        </fieldset>
+      </form>
+    </div>
+
     <template id="element">
       <figure class="element">
         <img src="#" alt="Изображение не может быть показано" class="element__picture">
         <figcaption class="element__caption">
           <h2 class="element__caption-text"></h2>
-          <button type="button" class="element__caption-like"></button>
+          <!-- <button type="button" class="element__caption-like"></button> -->
+          <div class='element__caption-like-group'>
+            <button type="button" class="element__caption-like"></button>
+            <p class="element__caption-like-count">3</p>
+          </div>
         </figcaption>
-        <button type="button" class="element__delete-button"></button>
+        <button type="button" class="element__delete-button"></button>        
       </figure>
     </template>
   </div>

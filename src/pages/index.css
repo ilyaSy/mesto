@@ -25,6 +25,8 @@
 @import url('../blocks/element/__caption-text/element__caption-text.css');
 @import url('../blocks/element/__caption-like/element__caption-like.css');
 @import url('../blocks/element/__caption-like/_active/element__caption-like_active.css');
+@import url('../blocks/element/__caption-like-group/element__caption-like-group.css');
+@import url('../blocks/element/__caption-like-count/element__caption-like-count.css');
 @import url('../blocks/element/__delete-button/element__delete-button.css');
 /*section: footer*/
 @import url('../blocks/footer/footer.css');

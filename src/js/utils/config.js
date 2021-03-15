@@ -1,7 +1,11 @@
 export default [
   {
     name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
+    // likes: []
+    // _id: 
+    // owner: {name: , about: , avatar: , cohort: , _id: }
+    // createdAt
   },
   {
     name: 'Челябинская область',
