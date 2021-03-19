@@ -77,7 +77,7 @@ function createCard(card) {
     },
   );
 
-  const cardElement = cardObj.generate();
+  const cardEl = cardObj.generate();
 
   //we can delete only OUR data
   if (card.owner._id !== user.id) {
@@ -89,11 +89,8 @@ function createCard(card) {
     cardObj.setBtnStatus(likeButtonSelector, likeButtonActiveSelector);
   }
 
-  return cardElement;
+  return cardEl;
 }
-
-//initialize Cards - no information
-const initializeNoCards = () => {cardElement};
 
 //initialize Cards
 const initializeCards = () => { section.renderItems() };
@@ -105,7 +102,7 @@ api.getInitialCards()
     section = new Section({ items: initialCards, renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
     initializeCards();
   })
-  .catch(initializeNoCards);
+  .catch(() => {cardElement.textContent = 'Нет фотографий'});
 
 //------------------       popup - user profile      ---------------------
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
@@ -170,8 +167,6 @@ const popupProfileAva = new PopupWithForm({popupSelector: '.popup_type_ava',
       avatar: userData.profileAvatarLink
     })
       .then(data => {
-        console.log(data)
-
         user.setUserInfo({
           profileName: data.name,
           profileJob: data.about,
