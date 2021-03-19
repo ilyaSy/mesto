@@ -15,7 +15,11 @@
 
     <main class="content">
       <section class="profile" aria-label="content">
-        <img src="<%=require('./images/profile.jpg')%>" alt="Фото: аватар пользователя" class="profile__avatar">
+        <!-- <img src="<%=require('./images/profile.jpg')%>" alt="Фото: аватар пользователя" class="profile__avatar"> -->
+        <div class="profile__avatar-container">
+          <img src="<%=require('./images/profile.jpg')%>" alt="Фото: аватар пользователя" class="profile__avatar">
+          <button class="profile__edit-ava-button"></button>
+        </div>
         <div class="profile__info">
           <div class="profile__name-block">
             <h1 class="profile__name">Жак-Ив Кусто</h1>

@@ -10,6 +10,6 @@
   line-height: 15px;
 }
 
-.popup__error:last-of-type {
+.popup__error:last-of-type:not(:first-of-type) {
   top: 195px;
 }
