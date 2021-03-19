@@ -23,14 +23,16 @@ export default class Card {
         this._captionLikeCount.textContent = card.likes ? card.likes.length : 0;   
         event.target.classList.toggle('element__caption-like_active');
       })
+      .catch(err => console.log('Ошибка: ' + err))
   }
 
   _handleDelete = event => {
     this._deleteCard(this._card._id)
       .then(card => {
         event.target.closest('.element').remove();
+        this._closeConfirm()
       })
-      .finally(() => {this._closeConfirm()})
+      .catch(err => console.log('Ошибка: ' + err))
   }
 
   _handleOpenPopup = () => this._openPopup(this._card.link, this._card.name);

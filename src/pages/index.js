@@ -48,21 +48,10 @@ popupCard.setEventListeners();
 const popupConfirm = new PopupWithForm({popupSelector: confirmPopupSelector});
 
 //main section object, will set after get initial cards
-let section;
+const section = new Section({ renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
 
 //main user Object
 const user = new UserInfo(profileNameSelector, profileJobSelector, profileAvatarSelector);
-
-//get initial user info
-api.getUserInfo()
-  .then(data => {
-    user.id = data._id;
-    user.setUserInfo({
-      profileName: data.name,
-      profileJob: data.about,
-      avatar: data.avatar
-    });
-  });
 
 function createCard(card) {
   const cardObj = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup, 
@@ -93,16 +82,26 @@ function createCard(card) {
 }
 
 //initialize Cards
-const initializeCards = () => { section.renderItems() };
+const initializeCards = (initialCards) => { section.renderItems(initialCards.reverse()) };
 
 //------------------           initialization        ---------------------
-//get initial cards using API
-api.getInitialCards()
-  .then((initialCards) => {
-    section = new Section({ items: initialCards, renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
-    initializeCards();
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then(data => {
+    const userData = data[0]
+    user.id = userData._id;
+    user.setUserInfo({
+      profileName: userData.name,
+      profileJob: userData.about,
+      avatar: userData.avatar
+    });
+
+    const initialCards = data[1]
+    initializeCards(initialCards);
   })
-  .catch(() => {cardElement.textContent = 'Нет фотографий'});
+  .catch(err => console.log('Ошибка: ' + err))
 
 //------------------       popup - user profile      ---------------------
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
@@ -120,11 +119,10 @@ const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
           profileJob: data.about,
           avatar: data.avatar
         });
-      })
-      .finally(() => {
-        popupProfile.setStopLoadingText()
         popupProfile.closePopup();
-      })    
+      })
+      .catch(err => console.log('Ошибка: ' + err))
+      .finally(popupProfile.setStopLoadingText())
   },
   handleInitialize: () => {
     const {profileName: name, profileJob: job} = user.getUserInfo();
@@ -144,11 +142,12 @@ const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
 
     popupAddCard.setStartLoadingText();
     api.addCard(card)
-      .then(data => {section.addItem(createCard(data))})
-      .finally(() => {
-        popupAddCard.setStopLoadingText()
-        popupAddCard.closePopup();
+      .then(data => {
+        section.addItem(createCard(data));
+        popupAddCard.closePopup()
       })
+      .catch(err => console.log('Ошибка: ' + err))
+      .finally(popupAddCard.setStopLoadingText());
   },
   handleInitialize: () => {
     validatePopupAddForm.initializeValidation();
@@ -172,11 +171,10 @@ const popupProfileAva = new PopupWithForm({popupSelector: '.popup_type_ava',
           profileJob: data.about,
           avatar: data.avatar
         });
-      })
-      .finally(() => {
-        popupProfileAva.setStopLoadingText()
         popupProfileAva.closePopup();
       })
+      .catch(err => console.log('Ошибка: ' + err))
+      .finally(popupProfileAva.setStopLoadingText())
   },
   handleInitialize: () => {
     validatePopupAvaForm.initializeValidation();
