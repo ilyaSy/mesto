@@ -1,13 +1,21 @@
 export default class Card {
   constructor({card, cardSelector}, 
     openPopup = () => {}, 
-    likeCard = () => {}, 
-    confirm = () => {}){
+    {
+      likeCard = () => {}, 
+      deleteCard = () => {}, 
+      openConfirm = () => {},
+      closeConfirm = () => {},
+      setConfirmSubmit = () => {},
+    }){
     this._card = card;
     this._cardSelector = cardSelector;
     this._openPopup = openPopup;
     this._likeCard = likeCard;
-    this._confirm = confirm;
+    this._deleteCard = deleteCard;
+    this._openConfirm = openConfirm;
+    this._closeConfirm = closeConfirm;
+    this._setConfirmSubmit = setConfirmSubmit;
   }
 
   // likeCard(cardId, isLiked)
@@ -21,16 +29,31 @@ export default class Card {
   }
 
   _handleDelete = event => {
-    event.target.closest('.element').remove();
+    this._deleteCard(this._card._id)
+      .then(card => {
+        event.target.closest('.element').remove();
+      })
+      .finally(() => {this._closeConfirm()})
   }
 
   _handleOpenPopup = () => {
     this._openPopup(this._card.link, this._card.name)
   }
 
+  setBtnStatus = (selector, statusClass) => {
+    this._element.querySelector(selector).classList.add(statusClass);
+  }
+
   _setEventListeners(){
     this._element.querySelector('.element__caption-like').addEventListener('click', this._handleLike);
-    this._element.querySelector('.element__delete-button').addEventListener('click', this._handleDelete);
+    // this._element.querySelector('.element__delete-button').addEventListener('click', this._handleDelete);
+    this._element.querySelector('.element__delete-button').addEventListener('click', event => {
+      this._openConfirm();
+      this._setConfirmSubmit((evt) => {
+        evt.preventDefault();
+        this._handleDelete(event);
+      });
+    });
     this._picture.addEventListener('click', this._handleOpenPopup);
   }
 

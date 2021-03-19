@@ -26,7 +26,7 @@ export default class Api{
   }
 
   deleteCard(cardId){
-    return fetch(`${this._apiURL}/cards/cards/${cardId}`, {method: 'DELETE', headers: this._headers,})
+    return fetch(`${this._apiURL}/cards/${cardId}`, {method: 'DELETE', headers: this._headers,})
       .then(this._handleApiResult.bind(null, 'deleteCard'))
       .catch(this._handleApiError)
   }
@@ -44,7 +44,7 @@ export default class Api{
   }
 
   setUserAvatar(avatar){
-    return fetch(`${this._apiURL}/users/me/${avatar}`, {method: 'PATCH', headers: this._headers})
+    return fetch(`${this._apiURL}/users/me/avatar`, {method: 'PATCH', headers: this._headers, body: JSON.stringify(avatar)})
       .then(this._handleApiResult.bind(null, 'setUserAvatar'))
       .catch(this._handleApiError)
   }

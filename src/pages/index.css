@@ -28,6 +28,7 @@
 @import url('../blocks/element/__caption-like-group/element__caption-like-group.css');
 @import url('../blocks/element/__caption-like-count/element__caption-like-count.css');
 @import url('../blocks/element/__delete-button/element__delete-button.css');
+@import url('../blocks/element/__delete-button/_disactive/element__delete-button_disactive.css');
 /*section: footer*/
 @import url('../blocks/footer/footer.css');
 /*popup: edit & add*/

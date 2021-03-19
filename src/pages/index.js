@@ -15,13 +15,20 @@ import {
   profileNameSelector,
   profileJobSelector,
   profileAvatarSelector,
+  confirmPopupSelector,
+  likeButtonSelector,
+  likeButtonActiveSelector,
+  deleteButtonSelector,
+  deleteButtonDisactiveSelector,
   validationObjects,
   popupInputName,
   popupInputJob,
   profileEditBtn,
+  profileEditAvaBtn,
   profileAddBtn,
   popupEditForm,
   popupAddForm,
+  popupAvaForm,
   tokenAuth,
   tokenGroup,
   apiURL
@@ -37,50 +44,15 @@ const api = new Api({
 const popupCard = new PopupWithImage(cardPopupSelector)
 popupCard.setEventListeners();
 
-function createCard(card) {
-  const cardElement = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup, api.likeCard.bind(api));
-  return cardElement.generate();
-}
-
 //main section object
-const section = new Section({
-  // items: initialCards,
-  renderer: (card) => {
-    const cardElement = createCard(card);
-    
-    section.addItem(cardElement)
-  }
-}, cardElementSelector);
-
-//initialize Cards - no information
-function initializeNoCards(){
-  cardElement.textContent = 'Нет фотографий'
-};
-
-//initialize Cards
-function initializeCards (initialCards) {
-  console.log(initialCards)
-  if (initialCards.length > 0) {
-    section.renderItems(initialCards);
-  }
-  else {
-    initializeNoCards();
-  }
-}
+const section = new Section({ renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
 
 //main user Object
 const user = new UserInfo(profileNameSelector, profileJobSelector, profileAvatarSelector);
 
-//------------------           initialization        ---------------------
-//get initial cards using API
-api.getInitialCards()
-  .then(initialCards => initializeCards(initialCards))
-  .catch(initializeNoCards);
-
 //get initial user info
 api.getUserInfo()
   .then(data => {
-    // console.log(data)
     user.id = data._id;
     user.setUserInfo({
       profileName: data.name,
@@ -89,26 +61,68 @@ api.getUserInfo()
     });
   });
 
+const popupConfirm = new PopupWithForm({popupSelector: confirmPopupSelector});
+
+function createCard(card) {
+  const cardObj = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup, 
+    {
+      likeCard: api.likeCard.bind(api), 
+      deleteCard: api.deleteCard.bind(api),
+      openConfirm: popupConfirm.openPopup.bind(popupConfirm),
+      closeConfirm: popupConfirm.closePopup.bind(popupConfirm),
+      setConfirmSubmit: popupConfirm.setEventListeners.bind(popupConfirm)
+    },
+  );
+
+  const cardElement = cardObj.generate();
+
+  //we can delete only OUR data
+  if (card.owner._id !== user.id) {
+    cardObj.setBtnStatus(deleteButtonSelector, deleteButtonDisactiveSelector);
+  }
+  
+  //set active if we like it
+  if (card.likes.some(c => c._id === user.id)) {
+    cardObj.setBtnStatus(likeButtonSelector, likeButtonActiveSelector);
+  }
+
+  return cardElement;
+}
+
+//initialize Cards - no information
+const initializeNoCards = () => {cardElement.textContent = 'Нет фотографий'};
+
+//initialize Cards
+function initializeCards (initialCards) {
+  console.log(initialCards)
+  initialCards.length > 0 ? section.renderItems(initialCards) : initializeNoCards();
+}
+
+//------------------           initialization        ---------------------
+//get initial cards using API
+api.getInitialCards().then(initializeCards).catch(initializeNoCards);
+
 //------------------       popup - user profile      ---------------------
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
   handleFormSubmit: (event, userData) => {
     event.preventDefault();
     
+    popupProfile.setStartLoadingText();
     api.editUserInfo({
       name: userData.profileName,
       about: userData.profileJob
     })
       .then(data => {
-        // console.log(data)
         user.setUserInfo({
           profileName: data.name,
           profileJob: data.about,
           avatar: data.avatar
         });
       })
-    // user.setUserInfo(userData);
-  
-    popupProfile.closePopup();
+      .finally(() => {
+        popupProfile.setStopLoadingText()
+        popupProfile.closePopup();
+      })    
   },
   handleInitialize: () => {
     const {profileName: name, profileJob: job} = user.getUserInfo();
@@ -126,13 +140,11 @@ const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
   handleFormSubmit: (event, card) => {
     event.preventDefault();
 
+    popupAddCard.setStartLoadingText();
     api.addCard(card)
-      .then(data => {
-        // console.log(data)
-        const cardElement = createCard(card);
-
-        section.addItem(cardElement)
-
+      .then(data => {section.addItem(createCard(data))})
+      .finally(() => {
+        popupAddCard.setStopLoadingText()
         popupAddCard.closePopup();
       })
   },
@@ -143,13 +155,35 @@ const popupAddCard = new PopupWithForm({popupSelector: '.popup_type_add',
 
 popupAddCard.setEventListeners();
 
-//------------------       popup - confirmation      ---------------------
-const popupConfirm = new PopupWithForm({popupSelector: '.popup_type_confirm',
-  handleFormSubmit: (event, undefined) => { event.preventDefault(); return true},
-  handleInitialize: () => {}
+//------------------       popup - user avatar       ---------------------
+const popupProfileAva = new PopupWithForm({popupSelector: '.popup_type_ava',
+  handleFormSubmit: (event, userData) => {
+    event.preventDefault();
+
+    popupProfileAva.setStartLoadingText();
+    api.setUserAvatar({
+      avatar: userData.profileAvatarLink
+    })
+      .then(data => {
+        console.log(data)
+
+        user.setUserInfo({
+          profileName: data.name,
+          profileJob: data.about,
+          avatar: data.avatar
+        });
+      })
+      .finally(() => {
+        popupProfileAva.setStopLoadingText()
+        popupProfileAva.closePopup();
+      })
+  },
+  handleInitialize: () => {
+    validatePopupAvaForm.initializeValidation();
+  }
 });
 
-popupConfirm.setEventListeners();
+popupProfileAva.setEventListeners();
 
 //enable form fields validation
 const validatePopupEditForm = new FormValidator(validationObjects, popupEditForm);
@@ -160,6 +194,11 @@ const validatePopupAddForm = new FormValidator(validationObjects, popupAddForm);
 validatePopupAddForm.initializeValidation();
 validatePopupAddForm.enableValidation();
 
+const validatePopupAvaForm = new FormValidator(validationObjects, popupAvaForm);
+validatePopupAvaForm.initializeValidation();
+validatePopupAvaForm.enableValidation();
+
 //add listeners
 profileEditBtn.addEventListener('click', popupProfile.openPopup);
 profileAddBtn.addEventListener('click', popupAddCard.openPopup);
+profileEditAvaBtn.addEventListener('click', popupProfileAva.openPopup);
