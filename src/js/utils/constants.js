@@ -15,16 +15,19 @@ export const popupAvaForm = popupAva.querySelector('.popup__container');
 export const popupInputName = popupEdit.querySelector('.popup__input_value_name');
 export const popupInputJob = popupEdit.querySelector('.popup__input_value_job');
 
+//card buttons
 export const deleteButtonSelector = '.element__delete-button';
 export const deleteButtonDisactiveSelector = 'element__delete-button_disactive';
 export const likeButtonSelector = '.element__caption-like';
 export const likeButtonActiveSelector = 'element__caption-like_active';
 
+//profile && add card
 const profile = document.querySelector('.profile');
 export const profileEditBtn = profile.querySelector('.profile__edit-button');
 export const profileEditAvaBtn = profile.querySelector('.profile__edit-ava-button');
 export const profileAddBtn = profile.querySelector('.profile__add-button');
 
+//validation data
 export const validationObjects = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
@@ -33,6 +36,7 @@ export const validationObjects = {
   errorClass: 'popup__error_visible'
 };
 
+//api data
 export const tokenAuth = '30b18b22-df4e-456d-bb26-16cda3a69c12';
 export const tokenGroup = 'cohort-21';
 export const apiURL = 'https://mesto.nomoreparties.co/v1';

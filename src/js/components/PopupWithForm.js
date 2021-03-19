@@ -20,7 +20,7 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
   }
 
-  setStartLoadingText = () => {this._submitButton.textContent += '...'};
+  setStartLoadingText = () => {this._submitButton.textContent = this._submitButtonBaseText + '...'};
   setStopLoadingText = () => {this._submitButton.textContent = this._submitButtonBaseText};
 
   _getInputValues = () => {
@@ -34,11 +34,8 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners(handler){
     super.setEventListeners();
-    if (handler && typeof handler === 'function') {
-      this._form.addEventListener('submit', handler);
-    }
-    else {
+    handler && typeof handler === 'function' ?
+      this._form.addEventListener('submit', handler) :
       this._form.addEventListener('submit', (event) => {this._handleFormSubmit(event, this._getInputValues())});
-    }
   }
 }

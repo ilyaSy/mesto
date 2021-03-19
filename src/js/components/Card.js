@@ -1,13 +1,10 @@
 export default class Card {
   constructor({card, cardSelector}, 
     openPopup = () => {}, 
-    {
-      likeCard = () => {}, 
-      deleteCard = () => {}, 
-      openConfirm = () => {},
+    { likeCard = () => {}, deleteCard = () => {}, },
+    { openConfirm = () => {},
       closeConfirm = () => {},
-      setConfirmSubmit = () => {},
-    }){
+      setConfirmSubmit = () => {}}){
     this._card = card;
     this._cardSelector = cardSelector;
     this._openPopup = openPopup;
@@ -36,9 +33,7 @@ export default class Card {
       .finally(() => {this._closeConfirm()})
   }
 
-  _handleOpenPopup = () => {
-    this._openPopup(this._card.link, this._card.name)
-  }
+  _handleOpenPopup = () => this._openPopup(this._card.link, this._card.name);
 
   setBtnStatus = (selector, statusClass) => {
     this._element.querySelector(selector).classList.add(statusClass);

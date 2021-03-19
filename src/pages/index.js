@@ -44,8 +44,11 @@ const api = new Api({
 const popupCard = new PopupWithImage(cardPopupSelector)
 popupCard.setEventListeners();
 
-//main section object
-const section = new Section({ renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
+//popup: confirm
+const popupConfirm = new PopupWithForm({popupSelector: confirmPopupSelector});
+
+//main section object, will set after get initial cards
+let section;
 
 //main user Object
 const user = new UserInfo(profileNameSelector, profileJobSelector, profileAvatarSelector);
@@ -61,13 +64,13 @@ api.getUserInfo()
     });
   });
 
-const popupConfirm = new PopupWithForm({popupSelector: confirmPopupSelector});
-
 function createCard(card) {
   const cardObj = new Card({ card: card, cardSelector: cardPopupTmplSelector }, popupCard.openPopup, 
-    {
+    { //api actions
       likeCard: api.likeCard.bind(api), 
-      deleteCard: api.deleteCard.bind(api),
+      deleteCard: api.deleteCard.bind(api)
+    },
+    { //confirm actions
       openConfirm: popupConfirm.openPopup.bind(popupConfirm),
       closeConfirm: popupConfirm.closePopup.bind(popupConfirm),
       setConfirmSubmit: popupConfirm.setEventListeners.bind(popupConfirm)
@@ -90,17 +93,19 @@ function createCard(card) {
 }
 
 //initialize Cards - no information
-const initializeNoCards = () => {cardElement.textContent = 'Нет фотографий'};
+const initializeNoCards = () => {cardElement};
 
 //initialize Cards
-function initializeCards (initialCards) {
-  console.log(initialCards)
-  initialCards.length > 0 ? section.renderItems(initialCards) : initializeNoCards();
-}
+const initializeCards = () => { section.renderItems() };
 
 //------------------           initialization        ---------------------
 //get initial cards using API
-api.getInitialCards().then(initializeCards).catch(initializeNoCards);
+api.getInitialCards()
+  .then((initialCards) => {
+    section = new Section({ items: initialCards, renderer: (card) => {section.addItem(createCard(card))} }, cardElementSelector);
+    initializeCards();
+  })
+  .catch(initializeNoCards);
 
 //------------------       popup - user profile      ---------------------
 const popupProfile = new PopupWithForm({popupSelector: '.popup_type_edit',
